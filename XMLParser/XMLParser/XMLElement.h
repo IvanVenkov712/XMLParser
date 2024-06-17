@@ -15,11 +15,7 @@ protected:
 	MyString text = "";
 	MyString tag = "";
 
-	virtual void setTag(const MyString& tag);
-	
-	virtual void setTag(MyString&& tag);
-
-	virtual const MyString& getTag() const;
+public:
 
 	virtual void setParent(const ElemPtr& parent);
 
@@ -29,12 +25,17 @@ protected:
 
 	virtual void setId(MyString&& id);
 
-public:
+	virtual void setTag(const MyString& tag);
+
+	virtual void setTag(MyString&& tag);
+
+	virtual const MyString& getTag() const;
+
 	virtual XMLElement* clone() const;
 
-	void setText(const MyString& text);
+	virtual void setText(const MyString& text);
 
-	void setText(MyString&& text);
+	virtual void setText(MyString&& text);
 
 	const MyString& getText() const;
 
@@ -47,6 +48,8 @@ public:
 	virtual void addAttribute(const MyString& name, const MyString& value);
 
 	virtual void setAttribute(const MyString& name, const MyString& value);
+
+	virtual void removeAttribute(const MyString& key);
 
 	virtual ElemPtr& getParent();
 

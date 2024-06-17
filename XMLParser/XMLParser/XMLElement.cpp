@@ -80,6 +80,11 @@ void XMLElement::setAttribute(const MyString& name, const MyString& value)
 	attributes[name] = value;
 }
 
+void XMLElement::removeAttribute(const MyString& key)
+{
+	attributes.removeAt(key);
+}
+
 XMLElement::ElemPtr& XMLElement::getParent()
 {
 	return parent;

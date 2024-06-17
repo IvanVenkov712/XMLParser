@@ -36,6 +36,12 @@
     <ClInclude Include="XMLEntry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="XMLElementFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IdList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyString.cpp">
@@ -45,6 +51,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="XMLElement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="XMLElementFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IdList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

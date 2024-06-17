@@ -128,17 +128,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="HeterogeneVector.h" />
+    <ClInclude Include="IdList.h" />
     <ClInclude Include="MyString.h" />
     <ClInclude Include="OrderedMap.h" />
     <ClInclude Include="Polymorphic_Container.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="XMLElement.h" />
+    <ClInclude Include="XMLElementFactory.h" />
     <ClInclude Include="XMLEntry.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="IdList.cpp" />
     <ClCompile Include="MyString.cpp" />
     <ClCompile Include="Polymorphic_Ptr.h" />
     <ClCompile Include="XMLElement.cpp" />
+    <ClCompile Include="XMLElementFactory.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
