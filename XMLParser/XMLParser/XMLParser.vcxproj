@@ -133,6 +133,7 @@
     <ClInclude Include="Polymorphic_Container.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="XMLElement.h" />
+    <ClInclude Include="XMLEntry.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyString.cpp" />

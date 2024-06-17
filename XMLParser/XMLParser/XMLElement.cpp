@@ -1,5 +1,20 @@
 #include "XMLElement.h"
 
+void XMLElement::setTag(const MyString& tag)
+{
+	this->tag = tag;
+}
+
+void XMLElement::setTag(MyString&& tag)
+{
+	this->tag = std::move(tag);
+}
+
+const MyString& XMLElement::getTag() const
+{
+	return tag;
+}
+
 void XMLElement::setParent(const ElemPtr& parent)
 {
 	this->parent = parent;
@@ -23,6 +38,21 @@ void XMLElement::setId(MyString&& id)
 XMLElement* XMLElement::clone() const
 {
 	return new XMLElement(*this);
+}
+
+void XMLElement::setText(const MyString& text)
+{
+	this->text = text;
+}
+
+void XMLElement::setText(MyString&& text)
+{
+	this->text = std::move(text);
+}
+
+const MyString& XMLElement::getText() const
+{
+	return text;
 }
 
 const MyString& XMLElement::getId() const

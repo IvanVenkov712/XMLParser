@@ -13,6 +13,13 @@ protected:
 	OrderedMap<MyString, MyString> attributes;
 	Vector<ElemPtr> children;
 	MyString text = "";
+	MyString tag = "";
+
+	virtual void setTag(const MyString& tag);
+	
+	virtual void setTag(MyString&& tag);
+
+	virtual const MyString& getTag() const;
 
 	virtual void setParent(const ElemPtr& parent);
 
@@ -24,6 +31,12 @@ protected:
 
 public:
 	virtual XMLElement* clone() const;
+
+	void setText(const MyString& text);
+
+	void setText(MyString&& text);
+
+	const MyString& getText() const;
 
 	virtual const MyString& getId() const;
 
