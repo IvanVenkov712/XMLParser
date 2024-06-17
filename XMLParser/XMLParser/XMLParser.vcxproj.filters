@@ -27,9 +27,21 @@
     <ClInclude Include="HeterogeneVector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Polymorphic_Container.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyString.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Polymorphic_Ptr.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="XMLElement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

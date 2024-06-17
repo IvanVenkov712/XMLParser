@@ -1,37 +1,59 @@
 #pragma once
+#include "Polymorphic_Container.h"
 #include "OrderedMap.h"
 #include "MyString.h"
 
+class XMLElement {
+public:
+	using ElemPtr = Polymorphic_Ptr<XMLElement>;
 
-
-class IXMLElement {
 protected:
-	virtual void setParent(IXMLElement* parent) = 0;
+	ElemPtr parent;
+	MyString id = "";
+	OrderedMap<MyString, MyString> attributes;
+	Vector<ElemPtr> children;
+	MyString text = "";
+
+	virtual void setParent(const ElemPtr& parent);
+
+	virtual void setParent(ElemPtr&& parent);
+
+	virtual void setId(const MyString& id);
+
+	virtual void setId(MyString&& id);
 
 public:
-	virtual const MyString& getId() const = 0;
+	virtual XMLElement* clone() const;
 
-	virtual IXMLElement* clone() const = 0;
+	virtual const MyString& getId() const;
 
-	virtual bool hasAttribute(const MyString& name) const = 0;
+	virtual bool hasAttribute(const MyString& name) const;
 
-	virtual const MyString& getAttribute(const MyString& name) const = 0;
+	virtual const MyString& getAttribute(const MyString& name) const;
 
-	virtual void addAttribute(const MyString& name, const MyString& value) = 0;
+	virtual void addAttribute(const MyString& name, const MyString& value);
 
-	virtual void setAttribute(const MyString& name, const MyString& value) = 0;
+	virtual void setAttribute(const MyString& name, const MyString& value);
 
-	virtual IXMLElement* getParent() = 0;
+	virtual ElemPtr& getParent();
 
-	virtual const IXMLElement* getParent() const = 0;
+	virtual const ElemPtr& getParent() const;
 
-	virtual IXMLElement* childAt() = 0;
+	virtual size_t childrenCount() const;
 
-	virtual const IXMLElement* childAt() const = 0;
+	virtual ElemPtr& childAt(size_t at);
 
-	virtual void addChild(IXMLElement* elem) = 0;
+	virtual const ElemPtr& childAt(size_t at) const;
 
-	virtual void insertChild(size_t at, IXMLElement* elem) = 0;
+	virtual int findChild(const MyString& childId) const;
 
-	virtual ~IXMLElement() = default;
+	virtual void addChild(ElemPtr&& elem);
+
+	virtual void addChild(const ElemPtr& elem);
+
+	virtual void insertChild(size_t at, ElemPtr&& elem);
+
+	virtual void insertChild(size_t at, const ElemPtr& elem);
+
+	virtual ~XMLElement() = default;
 };
