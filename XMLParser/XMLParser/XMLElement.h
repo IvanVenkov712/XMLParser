@@ -13,9 +13,29 @@ protected:
 	OrderedMap<MyString, MyString> attributes;
 	Vector<ElemPtr> children;
 	MyString text = "";
-	MyString tag = "";
+	MyString name = "";
+
+	virtual void pathOperator(const MyString& parentTag, const MyString& childTag, Vector<XMLElement*>& list);
+
+	virtual void pathOperator(const MyString& parentTag, const MyString& childTag, Vector<const XMLElement*>& list) const;
+
+	virtual void operatorAt(const MyString& name, const MyString& attrib, Vector<MyString>& list) const;
+
+	virtual void comparisonOperator(const MyString& childName, const MyString& childValue, const MyString& childToSelect, Vector<XMLElement*> list);
+
+	virtual void comparisonOperator(const MyString& childName, const MyString& childValue, const MyString& childToSelect, Vector< const XMLElement*> list) const;
 
 public:
+
+	Vector<XMLElement*> pathOperator(const MyString& parentTag, const MyString& childTag);
+
+	Vector<const XMLElement*> pathOperator(const MyString& parentTag, const MyString& childTag) const;
+
+	Vector<MyString> operatorAt(const MyString& name, const MyString& attrib) const;
+
+	Vector<XMLElement*> comparisonOperator(const MyString& childName, const MyString& childValue, const MyString& childToSelect);
+
+	Vector<const XMLElement*> comparisonOperator(const MyString& childName, const MyString& childValue, const MyString& childToSelect) const;
 
 	virtual void setParent(const ElemPtr& parent);
 
@@ -25,11 +45,11 @@ public:
 
 	virtual void setId(MyString&& id);
 
-	virtual void setTag(const MyString& tag);
+	virtual void setTag(const MyString& name);
 
-	virtual void setTag(MyString&& tag);
+	virtual void setTag(MyString&& name);
 
-	virtual const MyString& getTag() const;
+	virtual const MyString& getName() const;
 
 	virtual XMLElement* clone() const;
 
@@ -51,15 +71,15 @@ public:
 
 	virtual void removeAttribute(const MyString& key);
 
-	virtual ElemPtr& getParent();
+	virtual XMLElement* getParent();
 
-	virtual const ElemPtr& getParent() const;
+	virtual const XMLElement* getParent() const;
 
 	virtual size_t childrenCount() const;
 
-	virtual ElemPtr& childAt(size_t at);
+	virtual XMLElement* childAt(size_t at);
 
-	virtual const ElemPtr& childAt(size_t at) const;
+	virtual const XMLElement* childAt(size_t at) const;
 
 	virtual int findChild(const MyString& childId) const;
 
