@@ -67,6 +67,9 @@ bool XMLElement::hasAttribute(const MyString& name) const
 
 const MyString& XMLElement::getAttribute(const MyString& name) const
 {
+	if (name == "id") {
+		return id;
+	}
 	return attributes[name];
 }
 
