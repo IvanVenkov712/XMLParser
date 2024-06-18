@@ -2,6 +2,7 @@
 #include <sstream>
 #include "MyString.h"
 #include "OrderedMap.h"
+#include "Helpers.h"
 
 class IdList {
 private:

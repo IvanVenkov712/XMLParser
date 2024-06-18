@@ -102,6 +102,18 @@ const char* MyString::c_str() const
     return _data;
 }
 
+void MyString::pushBack(char ch)
+{
+    if (ch == 0) {
+        return;
+    }
+    if (_size >= _allocatedDataSize) {
+        resize(_allocatedDataSize * 2);
+    }
+    _data[_size] = ch;
+    _data[++_size] = '\0';
+}
+
 MyString& MyString::operator+=(const MyString& other)
 {
     if (getSize() + other.getSize() + 1 > _allocatedDataSize)

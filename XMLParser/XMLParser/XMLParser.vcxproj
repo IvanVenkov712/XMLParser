@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Helpers.h" />
     <ClInclude Include="HeterogeneVector.h" />
     <ClInclude Include="IdList.h" />
     <ClInclude Include="MyString.h" />
@@ -136,13 +137,16 @@
     <ClInclude Include="XMLElement.h" />
     <ClInclude Include="XMLElementFactory.h" />
     <ClInclude Include="XMLEntry.h" />
+    <ClInclude Include="XPath.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Helpers.cpp" />
     <ClCompile Include="IdList.cpp" />
     <ClCompile Include="MyString.cpp" />
     <ClCompile Include="Polymorphic_Ptr.h" />
     <ClCompile Include="XMLElement.cpp" />
     <ClCompile Include="XMLElementFactory.cpp" />
+    <ClCompile Include="XPath.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
