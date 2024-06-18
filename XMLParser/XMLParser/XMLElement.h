@@ -27,15 +27,19 @@ protected:
 
 public:
 
-	Vector<XMLElement*> pathOperator(const MyString& parentTag, const MyString& childTag);
+	virtual Vector<XMLElement*> pathOperator(const MyString& parentTag, const MyString& childTag);
 
-	Vector<const XMLElement*> pathOperator(const MyString& parentTag, const MyString& childTag) const;
+	virtual Vector<const XMLElement*> pathOperator(const MyString& parentTag, const MyString& childTag) const;
+	
+	virtual Vector<MyString> operatorAt(const MyString& name, const MyString& attrib) const;
+	 
+	virtual Vector<XMLElement*> comparisonOperator(const MyString& childName, const MyString& childValue, const MyString& childToSelect);
+	 
+	virtual Vector<const XMLElement*> comparisonOperator(const MyString& childName, const MyString& childValue, const MyString& childToSelect) const;
 
-	Vector<MyString> operatorAt(const MyString& name, const MyString& attrib) const;
+	virtual Vector<XMLElement*> executeXPath(const MyString& query);
 
-	Vector<XMLElement*> comparisonOperator(const MyString& childName, const MyString& childValue, const MyString& childToSelect);
-
-	Vector<const XMLElement*> comparisonOperator(const MyString& childName, const MyString& childValue, const MyString& childToSelect) const;
+	virtual Vector<const XMLElement*> executeXPath(const MyString query) const;
 
 	virtual void setParent(const ElemPtr& parent);
 

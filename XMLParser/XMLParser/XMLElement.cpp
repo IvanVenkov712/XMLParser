@@ -116,6 +116,17 @@ Vector<const XMLElement*> XMLElement::comparisonOperator(const MyString& childNa
 	return res;
 }
 
+Vector<XMLElement*> XMLElement::executeXPath(const MyString& query)
+{
+	Vector<XMLElement*> res;
+
+}
+
+Vector<const XMLElement*> XMLElement::executeXPath(const MyString query) const
+{
+	return Vector<const XMLElement*>();
+}
+
 
 void XMLElement::setTag(const MyString& name)
 {

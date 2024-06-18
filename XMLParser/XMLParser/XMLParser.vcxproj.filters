@@ -45,6 +45,9 @@
     <ClInclude Include="Polymorphic_Container.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="StringView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyString.cpp">
@@ -67,6 +70,9 @@
     </ClCompile>
     <ClCompile Include="Polymorphic_Ptr.h">
       <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StringView.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

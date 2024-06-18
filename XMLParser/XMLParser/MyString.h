@@ -1,6 +1,6 @@
-
 #pragma once
 #include <iostream>
+#include <cstring>
 
 class MyString
 {
@@ -31,6 +31,15 @@ public:
 	friend std::ostream& operator<<(std::ostream& os, const MyString& obj);
 	friend std::istream& operator>>(std::istream& is, MyString& ref);
 	friend MyString operator+(const MyString& lhs, const MyString& rhs);
+
+	int findFirst(char ch) const;
+
+	int findFirst(const MyString& substr) const;
+
+	int findLast(char ch) const;
+
+	MyString substr(size_t begin, size_t len);
+
 private:
 	explicit MyString(size_t stringLength);
 	void resize(unsigned newAllocatedDataSize);
