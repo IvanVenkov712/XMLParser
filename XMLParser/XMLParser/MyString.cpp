@@ -31,6 +31,14 @@ MyString::MyString(const char* data)
     std::strcpy(_data, data);
 }
 
+MyString::MyString(const char* data, size_t n)
+{
+    _size = n;
+    _allocatedDataSize = dataToAllocByStringLen(_size);
+    _data = new char[_allocatedDataSize];
+    std::strncpy(_data, data, n);
+}
+
 MyString::MyString(size_t stringLength)
 {
     _allocatedDataSize = dataToAllocByStringLen(stringLength);

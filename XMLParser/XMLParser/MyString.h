@@ -7,6 +7,7 @@ class MyString
 public:
 	MyString();
 	MyString(const char* data);
+	MyString(const char* data, size_t n);
 
 	MyString(const MyString& other);
 	MyString(MyString&& other) noexcept;

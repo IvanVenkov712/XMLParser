@@ -24,97 +24,142 @@ StringView StringView::substr(size_t from, size_t length) const
 	return StringView(_begin + from, _begin + from + length);
 }
 
-int StringView::findFirst(char ch) const
+int StringView::findFirst(size_t offset, char ch) const
 {
-	for (const char* i = _begin; i < _end; ++i) {
+	for (const char* i = _begin + offset; i < _end; ++i) {
 		if (*i == ch) {
 			return i - _begin;
 		}
 	}
 	return -1;
+}
+
+int StringView::findLast(size_t offset, char ch) const
+{
+	for (const char* i = _end - 1 - offset; i >= _begin; --i) {
+		if (*i == ch) {
+			return i - _begin;
+		}
+	}
+	return -1;
+}
+
+int StringView::findFirst(size_t offset, const StringView& substr) const
+{
+	size_t substrLen = substr.length();
+	if (length() - offset < substrLen) {
+		return -1;
+	}
+	for (const char* i = _begin + offset; i < _end - substrLen; ++i) {
+		if (strncmp(i, substr._begin, substrLen) == 0) {
+			return i - _begin;
+		}
+	}
+	return -1;
+}
+
+int StringView::findLast(size_t offset, const StringView& substr) const
+{
+	size_t substrLen = substr.length();
+	if (length() - offset < substrLen) {
+		return -1;
+	}
+	for (const char* i = _end - substrLen - 1 - offset; i >= _begin; --i) {
+		if (strncmp(i, substr._begin, substrLen) == 0) {
+			return i - _begin;
+		}
+	}
+	return -1;
+}
+
+int StringView::findFirstOf(size_t offset, const StringView& chars) const
+{
+	for (const char* i = _begin + offset; i < _end; ++i) {
+		if (chars.findFirst(*i) >= 0) {
+			return i - _begin;
+		}
+	}
+	return -1;
+}
+
+int StringView::findLastOf(size_t offset, const StringView& chars) const
+{
+	for (const char* i = _end - 1 - offset; i >= _begin; --i) {
+		if (chars.findFirst(*i) >= 0) {
+			return i - _begin;
+		}
+	}
+	return -1;
+}
+
+int StringView::findFirstNotOf(size_t offset, const StringView& chars) const
+{
+	for (const char* i = _begin + offset; i < _end; ++i) {
+		if (chars.findFirst(*i) < 0) {
+			return i - _begin;
+		}
+	}
+	return -1;
+}
+
+int StringView::findLastNotOf(size_t offset, const StringView& chars) const
+{
+	for (const char* i = _end - 1 - offset; i >= _begin; --i) {
+		if (chars.findFirst(*i) < 0) {
+			return i - _begin;
+		}
+	}
+	return -1;
+}
+
+int StringView::findFirst(char ch) const
+{
+	return findFirst(0, ch);
 }
 
 int StringView::findLast(char ch) const
 {
-	for (const char* i = _end - 1; i >= _begin; --i) {
-		if (*i == ch) {
-			return i - _begin;
-		}
-	}
-	return -1;
+	return findLast(0, ch);
 }
 
 int StringView::findFirst(const StringView& substr) const
 {
-	size_t substrLen = substr.length();
-	if (length() < substrLen) {
-		return -1;
-	}
-	for (const char* i = _begin; i < _end - substrLen; ++i) {
-		if (strncmp(i, substr._begin, substrLen) == 0) {
-			return i - _begin;
-		}
-	}
-	return -1;
+	return findFirst(0, substr);
 }
 
 int StringView::findLast(const StringView& substr) const
 {
-	size_t substrLen = substr.length();
-	if (length() < substrLen) {
-		return -1;
-	}
-	for (const char* i = _end - substrLen - 1; i >= _begin; --i) {
-		if (strncmp(i, substr._begin, substrLen) == 0) {
-			return i - _begin;
-		}
-	}
-	return -1;
+	return findLast(0, substr);
 }
 
 int StringView::findFirstOf(const StringView& chars) const
 {
-	for (const char* i = _begin; i < _end; ++i) {
-		if (chars.findFirst(*i) >= 0) {
-			return i - _begin;
-		}
-	}
-	return -1;
+	return findFirstOf(0, chars);
 }
 
 int StringView::findLastOf(const StringView& chars) const
 {
-	for (const char* i = _end - 1; i >= _begin; --i) {
-		if (chars.findFirst(*i) >= 0) {
-			return i - _begin;
-		}
-	}
-	return -1;
+	return findLastOf(0, chars);
 }
 
 int StringView::findFirstNotOf(const StringView& chars) const
 {
-	for (const char* i = _begin; i < _end; ++i) {
-		if (chars.findFirst(*i) < 0) {
-			return i - _begin;
-		}
-	}
-	return -1;
+	return findFirstNotOf(0, chars);
 }
 
 int StringView::findLastNotOf(const StringView& chars) const
 {
-	for (const char* i = _end - 1; i >= _begin; --i) {
-		if (chars.findFirst(*i) < 0) {
-			return i - _begin;
-		}
-	}
-	return -1;
+	return findLastNotOf(0, chars);
 }
 
 StringView StringView::trim() const
 {
 	return substr(findFirstNotOf(wSpaces), findLastOf(wSpaces));
+}
+
+MyString StringView::toString() const
+{
+	return MyString(_begin, _end - _begin);
 }
 
 std::ostream& operator<<(std::ostream& os, const StringView& strView)

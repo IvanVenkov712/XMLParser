@@ -39,7 +39,7 @@ public:
 	 
 	virtual Vector<const XMLElement*> comparisonOperator(const MyString& childName, const MyString& childValue, const MyString& childToSelect) const;
 
-	virtual Vector<XMLElement*> executeXPath(const MyString& query);
+	virtual Vector<MyString> executeXPath(const MyString& query);
 
 	virtual Vector<const XMLElement*> executeXPath(const MyString query) const;
 

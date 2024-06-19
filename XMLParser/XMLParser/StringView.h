@@ -18,6 +18,22 @@ public:
 
 	StringView substr(size_t from, size_t length) const;
 
+	int findFirst(size_t offset, char ch) const;
+
+	int findLast(size_t offset, char ch) const;
+
+	int findFirst(size_t offset, const StringView& substr) const;
+
+	int findLast(size_t offset, const StringView& substr) const;
+
+	int findFirstOf(size_t offset, const StringView& chars) const;
+
+	int findLastOf(size_t offset, const StringView& chars) const;
+
+	int findFirstNotOf(size_t offset, const StringView& chars) const;
+
+	int findLastNotOf(size_t offset, const StringView& chars) const;
+
 	int findFirst(char ch) const;
 
 	int findLast(char ch) const;
@@ -35,6 +51,8 @@ public:
 	int findLastNotOf(const StringView& chars) const;
 
 	StringView trim() const;
+
+	MyString toString() const;
 
 	friend bool operator==(const StringView& lhs, const StringView& rhs);
 

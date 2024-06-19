@@ -116,9 +116,21 @@ Vector<const XMLElement*> XMLElement::comparisonOperator(const MyString& childNa
 	return res;
 }
 
-Vector<XMLElement*> XMLElement::executeXPath(const MyString& query)
+Vector<MyString> XMLElement::executeXPath(const MyString& query)
 {
-	Vector<XMLElement*> res;
+	Vector<MyString> res;
+	StringView view(query);
+	int to = view.findFirstOf("/[");
+	MyString elemName = view.substr(0, to).toString();
+	if (view[to] == '/') {
+		int childBegin = to + 1;
+		int childEnd = view.findFirst(childBegin, '[');
+		if (childEnd < 0) {
+			childEnd = view.length();
+			MyString childName = view.substr(childBegin, childEnd - childBegin).toString();
+		}
+	}
+	return res;
 
 }
 
