@@ -225,7 +225,7 @@ OrderedMap<KeyT, ValueT>::~OrderedMap() {
 
 template<typename KeyT, typename ValueT>
 bool OrderedMap<KeyT, ValueT>::exists(const KeyT& key) const {
-	return find(key >= 0);
+	return find(key) >= 0;
 }
 
 template<typename KeyT, typename ValueT>

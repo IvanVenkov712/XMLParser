@@ -17,31 +17,7 @@ protected:
 	MyString text = "";
 	MyString name = "";
 
-	virtual void pathOperator(const MyString& parentTag, const MyString& childTag, Vector<XMLElement*>& list);
-
-	virtual void pathOperator(const MyString& parentTag, const MyString& childTag, Vector<const XMLElement*>& list) const;
-
-	virtual void operatorAt(const MyString& name, const MyString& attrib, Vector<MyString>& list) const;
-
-	virtual void comparisonOperator(const MyString& childName, const MyString& childValue, const MyString& childToSelect, Vector<XMLElement*> list);
-
-	virtual void comparisonOperator(const MyString& childName, const MyString& childValue, const MyString& childToSelect, Vector< const XMLElement*> list) const;
-
 public:
-
-	virtual Vector<XMLElement*> pathOperator(const MyString& parentTag, const MyString& childTag);
-
-	virtual Vector<const XMLElement*> pathOperator(const MyString& parentTag, const MyString& childTag) const;
-	
-	virtual Vector<MyString> operatorAt(const MyString& name, const MyString& attrib) const;
-	 
-	virtual Vector<XMLElement*> comparisonOperator(const MyString& childName, const MyString& childValue, const MyString& childToSelect);
-	 
-	virtual Vector<const XMLElement*> comparisonOperator(const MyString& childName, const MyString& childValue, const MyString& childToSelect) const;
-
-	virtual Vector<MyString> executeXPath(const MyString& query);
-
-	virtual Vector<const XMLElement*> executeXPath(const MyString query) const;
 
 	virtual void setParent(const ElemPtr& parent);
 
@@ -99,7 +75,7 @@ public:
 
 	virtual ~XMLElement() = default;
 
-	void save(std::ostream& os, unsigned int indentCount) const;
+	virtual void save(std::ostream& os, unsigned int indentCount) const;
 
 	friend std::ostream& operator<<(std::ostream& os, const XMLElement& elem);
 };

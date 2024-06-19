@@ -48,6 +48,12 @@
     <ClInclude Include="StringView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ElementFunction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="XPathFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyString.cpp">
@@ -72,6 +78,12 @@
       <Filter>Header Files</Filter>
     </ClCompile>
     <ClCompile Include="StringView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ElementFunction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="XPathFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

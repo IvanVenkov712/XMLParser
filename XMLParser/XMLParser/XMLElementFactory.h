@@ -7,7 +7,7 @@
 class XMLElementFactory {
 	static IdList list;
 public:
-	static XMLElement* getElement(const char* fileName);
+	static XMLElement* create(const char* fileName);
 
-	static XMLElement* getElement(XMLElement* parent, std::ifstream& ifs);
+	static XMLElement* create(XMLElement* parent, std::ifstream& ifs);
 };

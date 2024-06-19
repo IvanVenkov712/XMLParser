@@ -1,11 +1,11 @@
 #include "XMLElementFactory.h"
 
-XMLElement* XMLElementFactory::getElement(const char* fileName)
+XMLElement* XMLElementFactory::create(const char* fileName)
 {
-
+	return nullptr;
 }
 
-XMLElement* XMLElementFactory::getElement(XMLElement* parent, std::ifstream& ifs)
+XMLElement* XMLElementFactory::create(XMLElement* parent, std::ifstream& ifs)
 {
 	return nullptr;
 }

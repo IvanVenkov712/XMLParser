@@ -138,8 +138,11 @@
     <ClInclude Include="XMLElement.h" />
     <ClInclude Include="XMLElementFactory.h" />
     <ClInclude Include="XMLEntry.h" />
+    <ClInclude Include="ElementFunction.h" />
+    <ClInclude Include="XPathFactory.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ElementFunction.cpp" />
     <ClCompile Include="Helpers.cpp" />
     <ClCompile Include="IdList.cpp" />
     <ClCompile Include="MyString.cpp" />
@@ -148,6 +151,7 @@
     <ClCompile Include="StringView.cpp" />
     <ClCompile Include="XMLElement.cpp" />
     <ClCompile Include="XMLElementFactory.cpp" />
+    <ClCompile Include="XPathFactory.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
