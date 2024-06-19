@@ -283,3 +283,32 @@ void XMLElement::insertChild(size_t at, const ElemPtr& elem)
 {
 	children.insert(elem, at);
 }
+
+void XMLElement::save(std::ostream& os, unsigned int indentCount) const
+{
+	MyString indent;
+	for (unsigned i = 0; i < indentCount; ++i) {
+		indent += " ";
+	}
+	os << indent << "<" << name;
+	if (attributes.getCount() > 0) {
+		os << " ";
+		for (size_t i = 0; i < attributes.getCount(); ++i) {
+			const OrderedMap<MyString, MyString>::Pair& p = attributes.getPair(i);
+			os << p.key << "=" << "\"" << p.value << "\"";
+		}
+	}
+	os << ">" << std::endl;
+
+	os << indent << text << std::endl;
+	for (size_t i = 0; i < children.getSize(); ++i) {
+		childAt(i)->save(os, indentCount + 4);
+	}
+	os << indent << "</" << name << ">" << std::endl;
+}
+
+std::ostream& operator<<(std::ostream& os, const XMLElement& elem)
+{
+	elem.save(os, 0);
+	return os;
+}

@@ -137,34 +137,6 @@ const char& MyString::operator[](size_t index) const
     return _data[index]; // no security check!!
 }
 
-int MyString::findFirst(char ch) const
-{
-    const char* ptrPos = std::strchr(_data, ch);
-    if (!ptrPos) {
-        return -1;
-    }
-    return ptrPos - _data;
-}
-
-int MyString::findFirst(const MyString& substr) const
-{
-    const char* ptrPos = std::strstr(_data, substr.c_str());
-    if (!ptrPos) {
-        return -1;
-    }
-    return ptrPos - _data;
-}
-
-int MyString::findLast(char ch) const
-{
-    const char* ptrPos = std::strrchr(_data, ch);
-    if (!ptrPos) {
-        return -1;
-    }
-    return ptrPos - _data;
-}
-
-
 std::ostream& operator<<(std::ostream& os, const MyString& obj)
 {
     return os << obj._data;

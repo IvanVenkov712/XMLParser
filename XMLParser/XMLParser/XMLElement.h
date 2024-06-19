@@ -2,6 +2,8 @@
 #include "Polymorphic_Container.h"
 #include "OrderedMap.h"
 #include "MyString.h"
+#include "StringView.h"
+#include <iostream>
 
 class XMLElement {
 public:
@@ -96,4 +98,8 @@ public:
 	virtual void insertChild(size_t at, const ElemPtr& elem);
 
 	virtual ~XMLElement() = default;
+
+	void save(std::ostream& os, unsigned int indentCount) const;
+
+	friend std::ostream& operator<<(std::ostream& os, const XMLElement& elem);
 };

@@ -84,7 +84,7 @@ int StringView::findFirstOf(const StringView& chars) const
 
 int StringView::findLastOf(const StringView& chars) const
 {
-	for (const char* i = _end - 1; i < _begin; --i) {
+	for (const char* i = _end - 1; i >= _begin; --i) {
 		if (chars.findFirst(*i) >= 0) {
 			return i - _begin;
 		}
@@ -104,7 +104,7 @@ int StringView::findFirstNotOf(const StringView& chars) const
 
 int StringView::findLastNotOf(const StringView& chars) const
 {
-	for (const char* i = _end - 1; i < _begin; --i) {
+	for (const char* i = _end - 1; i >= _begin; --i) {
 		if (chars.findFirst(*i) < 0) {
 			return i - _begin;
 		}
