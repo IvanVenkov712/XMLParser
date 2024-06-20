@@ -160,6 +160,44 @@ int XMLElement::findChild(const MyString& childId) const
 	return -1;
 }
 
+XMLElement* XMLElement::findInTree(const Predicate<XMLElement>& pr)
+{
+	if (pr(*this)) {
+		return this;
+	}
+	for (size_t i = 0; i < childrenCount(); ++i) {
+		XMLElement* res = childAt(i)->findInTree(pr);
+		if (res) {
+			return res;
+		}
+	}
+	return nullptr;
+}
+
+const XMLElement* XMLElement::findInTree(const Predicate<XMLElement>& pr) const
+{
+	if (pr(*this)) {
+		return this;
+	}
+	for (size_t i = 0; i < childrenCount(); ++i) {
+		const XMLElement* res = childAt(i)->findInTree(pr);
+		if (res) {
+			return res;
+		}
+	}
+	return nullptr;
+}
+
+XMLElement* XMLElement::findInTreeById(const MyString& id)
+{
+	return findInTree(IdPredicate(id));
+}
+
+const XMLElement* XMLElement::findInTreeById(const MyString& id) const
+{
+	return findInTree(IdPredicate(id));
+}
+
 void XMLElement::addChild(ElemPtr&& elem)
 {
 	children.pushBack(std::move(elem));
@@ -207,4 +245,20 @@ std::ostream& operator<<(std::ostream& os, const XMLElement& elem)
 {
 	elem.save(os, 0);
 	return os;
+}
+
+XMLElement::IdPredicate::IdPredicate(const MyString& id) : id(id)
+{}
+
+XMLElement::IdPredicate::IdPredicate(MyString&& id) : id(std::move(id))
+{}
+
+bool XMLElement::IdPredicate::operator()(const XMLElement& elem)
+{
+	return id == elem.getId();
+}
+
+bool XMLElement::IdPredicate::operator()(const XMLElement& elem) const
+{
+	return id == elem.getId();
 }

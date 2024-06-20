@@ -3,9 +3,22 @@
 #include "OrderedMap.h"
 #include "MyString.h"
 #include "StringView.h"
+#include "Predicate.h"
 #include <iostream>
 
 class XMLElement {
+public:
+	class IdPredicate : public Predicate<XMLElement> {
+		MyString id;
+	public:
+		IdPredicate(const MyString& id);
+
+		IdPredicate(MyString&& id);
+
+		bool operator()(const XMLElement& elem) override;
+
+		bool operator()(const XMLElement& elem) const override;
+	};
 public:
 	using ElemPtr = Polymorphic_Ptr<XMLElement>;
 
@@ -16,6 +29,8 @@ protected:
 	Vector<ElemPtr> children;
 	MyString text = "";
 	MyString name = "";
+
+
 
 public:
 
@@ -39,7 +54,7 @@ public:
 
 	virtual void setText(MyString&& text);
 
-	const MyString& getText() const;
+	virtual const MyString& getText() const;
 
 	virtual const MyString& getId() const;
 
@@ -64,6 +79,14 @@ public:
 	virtual const XMLElement* childAt(size_t at) const;
 
 	virtual int findChild(const MyString& childId) const;
+
+	virtual XMLElement* findInTree(const Predicate<XMLElement>& pr);
+
+	virtual const XMLElement* findInTree(const Predicate<XMLElement>& pr) const;
+
+	virtual XMLElement* findInTreeById(const MyString& id);
+
+	virtual const XMLElement* findInTreeById(const MyString& id) const;
 
 	virtual void addChild(ElemPtr&& elem);
 

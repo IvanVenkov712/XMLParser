@@ -54,6 +54,9 @@
     <ClInclude Include="XPathFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Predicate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyString.cpp">

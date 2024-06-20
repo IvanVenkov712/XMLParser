@@ -133,6 +133,7 @@
     <ClInclude Include="MyString.h" />
     <ClInclude Include="OrderedMap.h" />
     <ClInclude Include="Polymorphic_Container.h" />
+    <ClInclude Include="Predicate.h" />
     <ClInclude Include="StringView.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="XMLElement.h" />
