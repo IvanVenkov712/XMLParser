@@ -30,8 +30,6 @@ protected:
 	MyString text = "";
 	MyString name = "";
 
-
-
 public:
 
 	virtual void setParent(const ElemPtr& parent);

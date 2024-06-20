@@ -48,7 +48,7 @@ std::map<std::string, std::string> parseAttributes(const std::string& str) {
 // Function to parse an XML element
 XMLElement parseElement(const std::string& str, size_t& pos) {
     XMLElement element;
-
+    pos = str.find_first_not_of(" \n\t\v\r", pos);
     size_t openTagStart = str.find('<', pos);
     size_t openTagEnd = str.find('>', openTagStart);
     std::string tagContent = str.substr(openTagStart + 1, openTagEnd - openTagStart - 1);
@@ -64,13 +64,16 @@ XMLElement parseElement(const std::string& str, size_t& pos) {
     }
 
     size_t closeTagStart = str.find('<', openTagEnd + 1);
+    if (closeTagStart == std::string::npos) {
+        return element;
+    }
     if (str[closeTagStart + 1] == '/') {
         size_t closeTagEnd = str.find('>', closeTagStart);
         element.text = trim(str.substr(openTagEnd + 1, closeTagStart - openTagEnd - 1));
         pos = closeTagEnd + 1;
     }
     else {
-        pos = openTagEnd + 1;
+        pos = closeTagStart;
         while (str[pos] != '<' || str[pos + 1] != '/') {
             element.children.push_back(parseElement(str, pos));
         }
