@@ -36,3 +36,20 @@ char toChar(size_t digit)
 	}
 	throw std::invalid_argument("digit out of range");
 }
+
+MyString readAll(std::ifstream& ifs)
+{
+	MyString res;
+	size_t currPos = ifs.tellg();
+	char c = '\0';
+	while (true) {
+		c = ifs.get();
+		if (ifs.eof()) {
+			break;
+		}
+		res.pushBack(c);
+	}
+	ifs.clear();
+	ifs.seekg(currPos);
+	return res;
+}

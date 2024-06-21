@@ -24,12 +24,12 @@
 //}
 
 
-void XMLElement::setTag(const MyString& name)
+void XMLElement::setName(const MyString& name)
 {
 	this->name = name;
 }
 
-void XMLElement::setTag(MyString&& name)
+void XMLElement::setName(MyString&& name)
 {
 	this->name = std::move(name);
 }
@@ -123,6 +123,26 @@ void XMLElement::removeAttribute(const MyString& key)
 		throw std::invalid_argument("You are trying to remove the id");
 	}
 	attributes.removeAt(key);
+}
+
+void XMLElement::setAttributes(const OrderedMap<MyString, MyString>& attributes)
+{
+	this->attributes = attributes;
+}
+
+void XMLElement::setAttributes(OrderedMap<MyString, MyString>&& attributes)
+{
+	this->attributes = std::move(attributes);
+}
+
+OrderedMap<MyString, MyString>& XMLElement::getAttributes()
+{
+	return attributes;
+}
+
+const OrderedMap<MyString, MyString>& XMLElement::getAttributes() const
+{
+	return attributes;
 }
 
 XMLElement* XMLElement::getParent()
@@ -226,10 +246,9 @@ void XMLElement::save(std::ostream& os, unsigned int indentCount) const
 	}
 	os << indent << "<" << name;
 	if (attributes.getCount() > 0) {
-		os << " ";
 		for (size_t i = 0; i < attributes.getCount(); ++i) {
 			const OrderedMap<MyString, MyString>::Pair& p = attributes.getPair(i);
-			os << p.key << "=" << "\"" << p.value << "\"";
+			os << " " << p.key << "=" << "\"" << p.value << "\"";
 		}
 	}
 	os << ">" << std::endl;
@@ -252,11 +271,6 @@ XMLElement::IdPredicate::IdPredicate(const MyString& id) : id(id)
 
 XMLElement::IdPredicate::IdPredicate(MyString&& id) : id(std::move(id))
 {}
-
-bool XMLElement::IdPredicate::operator()(const XMLElement& elem)
-{
-	return id == elem.getId();
-}
 
 bool XMLElement::IdPredicate::operator()(const XMLElement& elem) const
 {

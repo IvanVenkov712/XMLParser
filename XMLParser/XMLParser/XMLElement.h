@@ -15,8 +15,6 @@ public:
 
 		IdPredicate(MyString&& id);
 
-		bool operator()(const XMLElement& elem) override;
-
 		bool operator()(const XMLElement& elem) const override;
 	};
 public:
@@ -40,9 +38,9 @@ public:
 
 	virtual void setId(MyString&& id);
 
-	virtual void setTag(const MyString& name);
+	virtual void setName(const MyString& name);
 
-	virtual void setTag(MyString&& name);
+	virtual void setName(MyString&& name);
 
 	virtual const MyString& getName() const;
 
@@ -65,6 +63,14 @@ public:
 	virtual void setAttribute(const MyString& name, const MyString& value);
 
 	virtual void removeAttribute(const MyString& key);
+
+	virtual void setAttributes(const OrderedMap<MyString, MyString>& attributes);
+
+	virtual void setAttributes(OrderedMap<MyString, MyString>&& attributes);
+
+	virtual OrderedMap<MyString, MyString>& getAttributes();
+
+	virtual const OrderedMap<MyString, MyString>& getAttributes() const;
 
 	virtual XMLElement* getParent();
 
@@ -96,7 +102,7 @@ public:
 
 	virtual ~XMLElement() = default;
 
-	virtual void save(std::ostream& os, unsigned int indentCount) const;
+	virtual void save(std::ostream& os, unsigned int indentCount = 0) const;
 
 	friend std::ostream& operator<<(std::ostream& os, const XMLElement& elem);
 };

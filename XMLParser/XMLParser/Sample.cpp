@@ -3,12 +3,6 @@
 #include <map>
 #include <vector>
 
-// Structure to hold an XML attribute
-struct XMLAttribute {
-    std::string name;
-    std::string value;
-};
-
 // Structure to hold an XML element
 struct XMLElement {
     std::string name;
@@ -48,7 +42,6 @@ std::map<std::string, std::string> parseAttributes(const std::string& str) {
 // Function to parse an XML element
 XMLElement parseElement(const std::string& str, size_t& pos) {
     XMLElement element;
-    pos = str.find_first_not_of(" \n\t\v\r", pos);
     size_t openTagStart = str.find('<', pos);
     size_t openTagEnd = str.find('>', openTagStart);
     std::string tagContent = str.substr(openTagStart + 1, openTagEnd - openTagStart - 1);
@@ -76,6 +69,7 @@ XMLElement parseElement(const std::string& str, size_t& pos) {
         pos = closeTagStart;
         while (str[pos] != '<' || str[pos + 1] != '/') {
             element.children.push_back(parseElement(str, pos));
+            pos = str.find_first_not_of(" \n\t\v\r", pos);
         }
         size_t closeTagEnd = str.find('>', pos);
         pos = closeTagEnd + 1;
@@ -114,18 +108,18 @@ void printElement(const XMLElement& element, int indent = 0) {
     }
 }
 
-int main() {
-    std::string xmlData = R"(
-        <note>
-            <to>Tove</to>
-            <from>Jani</from>
-            <heading>Reminder</heading>
-            <body>Don't forget me this weekend!</body>
-        </note>
-    )";
-
-    XMLElement root = parseXML(xmlData);
-    printElement(root);
-
-    return 0;
-}
+//int main() {
+//    std::string xmlData = R"(
+//        <note id="wkjd" kjd="sioqwwe">
+//            <to>Tove</to>
+//            <from>Jani</from>
+//            <heading>Reminder</heading>
+//            <body>Don't forget me this weekend!</body>
+//        </note>
+//    )";
+//
+//    XMLElement root = parseXML(xmlData);
+//    printElement(root);
+//
+//    return 0;
+//}

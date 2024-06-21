@@ -38,4 +38,5 @@ XPathQuery* XPathFactory::create(const MyString& queryString)
     catch (...) {
         return nullptr;
     }
+    return nullptr;
 }

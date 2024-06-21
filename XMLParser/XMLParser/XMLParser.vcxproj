@@ -146,6 +146,7 @@
     <ClCompile Include="ElementFunction.cpp" />
     <ClCompile Include="Helpers.cpp" />
     <ClCompile Include="IdList.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="MyString.cpp" />
     <ClCompile Include="Polymorphic_Ptr.h" />
     <ClCompile Include="Sample.cpp" />

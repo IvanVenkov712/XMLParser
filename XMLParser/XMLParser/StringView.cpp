@@ -13,6 +13,9 @@ size_t StringView::length() const
 }
 char StringView::operator[](size_t index) const
 {
+	if (index >= length()) {
+		throw std::out_of_range("index not less than size");
+	}
 	return _begin[index];
 }
 
