@@ -1,0 +1,24 @@
+<root id="ROOT">
+    <person id="0">
+        <name id="Unnamed">
+            John Smith
+        </name>
+        <address id="Unnamed_1" type="nohome">
+            Brooklyn, NY
+        </address>
+        <address id="Unnamed_2" type="work">
+            Manhattan, NYC
+        </address>
+        <occupation id="Unnamed_3">
+            dentist
+        </occupation>
+    </person>
+    <person id="1">
+        <name id="Unnamed_4">
+            Ivan Petrov
+        </name>
+        <address id="Unnamed_5">
+            Bulgaria
+        </address>
+    </person>
+</root>
