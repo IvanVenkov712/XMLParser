@@ -34,6 +34,7 @@ XMLElement* XMLElementFactory::create(const char* fileName)
 XMLElement* XMLElementFactory::create(std::ifstream& ifs)
 {
 	MyString str = readAll(ifs);
+    str = "<root id=\"ROOT\">" + str + "</root>";
 	return create(str);
 }
 

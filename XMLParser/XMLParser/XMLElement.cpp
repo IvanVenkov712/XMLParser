@@ -252,8 +252,9 @@ void XMLElement::save(std::ostream& os, unsigned int indentCount) const
 		}
 	}
 	os << ">" << std::endl;
-
-	os << indent << text << std::endl;
+	if (text != "") {
+		os << indent << "    " << text << std::endl;
+	}
 	for (size_t i = 0; i < children.getSize(); ++i) {
 		childAt(i)->save(os, indentCount + 4);
 	}

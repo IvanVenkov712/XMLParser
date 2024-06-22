@@ -1,5 +1,7 @@
 #include "IdList.h"
 
+OrderedMap<MyString, size_t> IdList::idMap{};
+
 MyString IdList::getId(const MyString& docId)
 {
     if (idMap.exists(docId)) {

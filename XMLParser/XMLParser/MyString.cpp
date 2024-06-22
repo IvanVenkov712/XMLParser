@@ -37,6 +37,7 @@ MyString::MyString(const char* data, size_t n)
 	_allocatedDataSize = dataToAllocByStringLen(_size);
 	_data = new char[_allocatedDataSize];
 	std::strncpy(_data, data, n);
+	_data[n] = '\0';
 }
 
 MyString::MyString(size_t stringLength)
@@ -112,14 +113,8 @@ const char* MyString::c_str() const
 
 void MyString::pushBack(char ch)
 {
-	if (ch == 0) {
-		return;
-	}
-	if (_size >= _allocatedDataSize) {
-		resize(_allocatedDataSize * 2);
-	}
-	_data[_size] = ch;
-	_data[++_size] = '\0';
+	char chArr[2] = { ch, '\0' };
+	this->operator+=(chArr);
 }
 
 MyString& MyString::operator+=(const MyString& other)

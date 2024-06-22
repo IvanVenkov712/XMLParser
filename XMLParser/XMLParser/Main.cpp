@@ -43,12 +43,7 @@ void executeXpathCommand();
 XMLElement* getElementById();
 
 int main() {
-	try {
-		runMainLoop();
-	}
-	catch (const std::exception& e) {
-		std::cout << "An error occurred: " << e.what() << std::endl;
-	}
+	runMainLoop();
 	return 0;
 }
 
@@ -63,8 +58,11 @@ MyString readCommand()
 void runMainLoop()
 {
 	MyString command;
-	while (command != "exit") {
+	while (true) {
 		command = readCommand();
+		if (command == "exit") {
+			break;
+		}
 		if (command == "open") {
 			executeOpenCommand();
 		}

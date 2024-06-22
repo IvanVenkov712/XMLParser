@@ -157,11 +157,22 @@ int StringView::findLastNotOf(const StringView& chars) const
 
 StringView StringView::trim() const
 {
-	return substr(findFirstNotOf(wSpaces), findLastOf(wSpaces));
+	int start = findFirstNotOf(wSpaces);
+	int len = findLastOf(wSpaces);
+	if (start < 0) {
+		return "";
+	}
+	if (len < 0) {
+		len = length() - start;
+	}
+	return substr(start, len);
 }
 
 MyString StringView::toString() const
 {
+	if (_end < _begin) {
+		throw std::exception("End became less than begin");
+	}
 	return MyString(_begin, _end - _begin);
 }
 
