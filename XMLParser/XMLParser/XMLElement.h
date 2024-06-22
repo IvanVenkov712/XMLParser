@@ -22,13 +22,14 @@ public:
 
 protected:
 	ElemPtr parent;
-	MyString id = "";
 	OrderedMap<MyString, MyString> attributes;
 	Vector<ElemPtr> children;
 	MyString text = "";
 	MyString name = "";
 
 public:
+
+	XMLElement();
 
 	virtual void setParent(const ElemPtr& parent);
 

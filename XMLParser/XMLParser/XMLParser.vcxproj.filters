@@ -74,9 +74,6 @@
     <ClCompile Include="Helpers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Sample.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Polymorphic_Ptr.h">
       <Filter>Header Files</Filter>
     </ClCompile>

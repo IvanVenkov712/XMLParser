@@ -158,14 +158,14 @@ int StringView::findLastNotOf(const StringView& chars) const
 StringView StringView::trim() const
 {
 	int start = findFirstNotOf(wSpaces);
-	int len = findLastOf(wSpaces);
+	int len = findLastNotOf(wSpaces);
 	if (start < 0) {
 		return "";
 	}
 	if (len < 0) {
 		len = length() - start;
 	}
-	return substr(start, len);
+	return substr(start, len + 1);
 }
 
 MyString StringView::toString() const

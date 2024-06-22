@@ -1,29 +1,5 @@
 #include "XMLElement.h"
 
-//Vector<MyString> XMLElement::executeXPath(const MyString& query)
-//{
-//	Vector<MyString> res;
-//	StringView view(query);
-//	int to = view.findFirstOf("/[");
-//	MyString elemName = view.substr(0, to).toString();
-//	if (view[to] == '/') {
-//		int childBegin = to + 1;
-//		int childEnd = view.findFirst(childBegin, '[');
-//		if (childEnd < 0) {
-//			childEnd = view.length();
-//			MyString childName = view.substr(childBegin, childEnd - childBegin).toString();
-//		}
-//	}
-//	return res;
-//
-//}
-//
-//Vector<const XMLElement*> XMLElement::executeXPath(const MyString query) const
-//{
-//	return Vector<const XMLElement*>();
-//}
-
-
 void XMLElement::setName(const MyString& name)
 {
 	this->name = name;
@@ -39,6 +15,11 @@ const MyString& XMLElement::getName() const
 	return name;
 }
 
+XMLElement::XMLElement()
+{
+	attributes["id"] = "0";
+}
+
 void XMLElement::setParent(const ElemPtr& parent)
 {
 	this->parent = parent;
@@ -51,12 +32,12 @@ void XMLElement::setParent(ElemPtr&& parent)
 
 void XMLElement::setId(const MyString& id)
 {
-	this->id = id;
+	attributes["id"] = id;
 }
 
 void XMLElement::setId(MyString&& id)
 {
-	this->id = std::move(id);
+	attributes["id"] = std::move(id);
 }
 
 XMLElement* XMLElement::clone() const
@@ -81,40 +62,27 @@ const MyString& XMLElement::getText() const
 
 const MyString& XMLElement::getId() const
 {
-	return id;
+	return attributes["id"];
 }
 
 bool XMLElement::hasAttribute(const MyString& name) const
 {
-	return attributes.exists(name) || name == "id";
+	return attributes.exists(name);
 }
 
 const MyString& XMLElement::getAttribute(const MyString& name) const
 {
-	if (name == "id") {
-		return id;
-	}
 	return attributes[name];
 }
 
 void XMLElement::addAttribute(const MyString& name, const MyString& value)
 {
-	if (name == "id") {
-		id = value;
-	}
-	else {
-		attributes[name] = value;
-	}
+	attributes[name] = value;
 }
 
 void XMLElement::setAttribute(const MyString& name, const MyString& value)
 {
-	if (name == "id") {
-		id = value;
-	}
-	else {
-		attributes[name] = value;
-	}
+	attributes[name] = value;
 }
 
 void XMLElement::removeAttribute(const MyString& key)

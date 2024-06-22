@@ -17,6 +17,12 @@ OrderedMap<MyString, MyString> XMLElementFactory::parseAttributes(const StringVi
 
 		pos = endQuotePos + 1;
 	}
+    if (attributes.exists("id")) {
+        attributes["id"] = IdList::getId(attributes["id"]);
+    }
+    else {
+        attributes["id"] = IdList::getId();
+    }
 	return attributes;
 }
 
@@ -62,9 +68,11 @@ XMLElement* XMLElementFactory::create(const StringView& str, size_t& pos)
         element->setName(tagContent.substr(0, spacePos).toString());
         StringView attributesStr = tagContent.substr(spacePos + 1, tagContent.length() - spacePos - 1);
         element->setAttributes(parseAttributes(attributesStr));
+
     }
     else {
         element->setName(tagContent.toString());
+        element->setId(IdList::getId());
     }
 
     int closeTagStart = str.findFirst(openTagEnd + 1, '<');
