@@ -33,7 +33,6 @@ public:
 	Vector<MyString>& result();
 
 	const Vector<MyString>& result() const;
-
 };
 
 class PathQuery : public XPathQuery {

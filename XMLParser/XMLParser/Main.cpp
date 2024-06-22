@@ -30,6 +30,18 @@ void executeSelectCommand();
 
 void executeChildrenCommand();
 
+void executeChildCommand();
+
+void executeTextCommand();
+
+void executeDeleteCommand();
+
+void executeNewchildCommand();
+
+void executeXpathCommand();
+
+XMLElement* getElementById();
+
 int main() {
 	try {
 		runMainLoop();
@@ -79,6 +91,21 @@ void runMainLoop()
 		}
 		else if (command == "children") {
 			executeChildrenCommand();
+		}
+		else if (command == "child") {
+			executeChildCommand();
+		}
+		else if (command == "text") {
+			executeTextCommand();
+		}
+		else if (command == "delete") {
+			executeDeleteCommand();
+		}
+		else if (command == "newchild") {
+			executeNewchildCommand();
+		}
+		else if (command == "xpath") {
+			executeXpathCommand();
 		}
 		else {
 			throw std::exception("Unrecognised command");
@@ -192,13 +219,7 @@ void executeHelpCommand()
 
 void executeSetCommand()
 {
-	std::cout << "Enter element id: ";
-	MyString id;
-	myGetLine(std::cin, id);
-	XMLElement* elem = currElem->findInTreeById(id);
-	if (!elem) {
-		throw std::exception("there is no element with this id");
-	}
+	XMLElement* elem = getElementById();
 	std::cout << "Enter attribute name: ";
 	MyString attribName;
 	myGetLine(std::cin, attribName);
@@ -210,15 +231,87 @@ void executeSetCommand()
 
 void executeSelectCommand()
 {
-	std::cout << "Enter element id: ";
-	MyString id;
-	myGetLine(std::cin, id);
-	const XMLElement* elem = currElem->findInTreeById(id);
-	if (!elem) {
-		throw std::exception("there is no element with this id");
-	}
+	XMLElement* elem = getElementById();
 	std::cout << "Enter attribute name: ";
 	MyString attribName;
 	myGetLine(std::cin, attribName);
 	std::cout << elem->getAttribute(attribName) << std::endl;
+}
+
+void executeChildrenCommand()
+{
+	XMLElement* elem = getElementById();
+	std::cout << "Element children: " << std::endl;
+	for (size_t i = 0; i < elem->childrenCount(); ++i) {
+		std::cout << elem->childAt(i)->getName() << ":" << std::endl;
+		const OrderedMap<MyString, MyString>& attribs = elem->childAt(i)->getAttributes();
+		for (size_t j = 0; j < attribs.getCount(); ++j) {
+			std::cout << "    " << attribs.getPair(j).key << "=" << attribs.getPair(j).value << std::endl;
+		}
+	}
+}
+
+void executeChildCommand()
+{
+	XMLElement* elem = getElementById();
+	size_t n;
+	std::cout << "Enter child position: ";
+	std::cin >> n;
+	std::cout << *(elem->childAt(n)) << std::endl;
+}
+
+void executeTextCommand()
+{
+	XMLElement* elem = getElementById();
+	std::cout << elem->getText() << std::endl;
+}
+
+void executeDeleteCommand()
+{
+	XMLElement* elem = getElementById();
+	std::cout << "Enter attribute key: ";
+	MyString key;
+	myGetLine(std::cin, key);
+	elem->removeAttribute(key);
+}
+
+void executeNewchildCommand()
+{
+	XMLElement* elem = getElementById();
+	MyString childId;
+	std::cout << "Enter child id: ";
+	myGetLine(std::cin, childId);
+	XMLElement* child = new XMLElement();
+	child->setId(IdList::getId(childId));
+	elem->addChild(child);
+}
+
+void executeXpathCommand()
+{
+	std::cout << "Enter xpath query: ";
+	MyString xpath;
+	myGetLine(std::cin, xpath);
+	XPathQuery* query = XPathFactory::create(xpath);
+	query->operator()(currElem);
+	std::cout << query->result().getSize() << "extracted: " << std::endl;
+	std::cout << "[";
+	for (size_t i = 0; i < query->result().getSize(); ++i) {
+		std::cout << query->result()[i] << " ";
+	}
+	delete query;
+}
+
+XMLElement* getElementById()
+{
+	if (!currElem) {
+		throw std::exception("There is no open file!");
+	}
+	MyString id;
+	std::cout << "Enter element id: ";
+	myGetLine(std::cin, id);
+	XMLElement* elem = currElem->findInTreeById(id);
+	if (!elem) {
+		throw std::exception("There is no element with this id!");
+	}
+	return elem;
 }

@@ -6,9 +6,9 @@
 
 class IdList {
 private:
-	OrderedMap<MyString, size_t> idMap;
+	static OrderedMap<MyString, size_t> idMap;
 public:
-	MyString getId(const MyString& docId);
+	static MyString getId(const MyString& docId);
 
-	MyString getId();
+	static MyString getId();
 };
