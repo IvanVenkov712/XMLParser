@@ -4,7 +4,8 @@
 #include <string>
 
 MyString currFile = "";
-XMLElement* currElem = nullptr;
+XMLElement* rootElem = nullptr;
+bool hasUnsaved = false;
 
 MyString readCommand();
 
@@ -110,33 +111,25 @@ void runMainLoop()
 		}
 	}
 	executeCloseCommand();
-	delete currElem;
+	delete rootElem;
 }
 
 void executeOpenCommand()
 {
-	if (currElem) {
-		std::cout << "Do you want to save your work?: ";
-		MyString resp;
-		std::cin >> resp;
-		if(resp == "yes") {
-			executeSaveCommand();
-		}
-		else if (resp != "no") {
-			throw std::exception("Invalid input");
-		}
+	if (rootElem) {
+		executeCloseCommand();
 	}
 	executeOpenCommandHard();
 }
 
 void executeOpenCommandHard()
 {
-	delete currElem;
+	delete rootElem;
 	std::cout << "Enter file path: ";
 	MyString path;
 	myGetLine(std::cin, path);
-	currElem = XMLElementFactory::create(path.c_str());
-	if (!currElem) {
+	rootElem = XMLElementFactory::create(path.c_str());
+	if (!rootElem) {
 		throw std::exception("Element could not be created!");
 	}
 	currFile = path;
@@ -144,15 +137,18 @@ void executeOpenCommandHard()
 
 void executePrintCommand()
 {
-	if (!currElem) {
+	if (!rootElem) {
 		throw std::exception("There is no open xml file!");
 	}
-	std::cout << *currElem << std::endl;
+	for (size_t i = 0; i < rootElem->childrenCount(); ++i) {
+		std::cout << *(rootElem->childAt(i)) << std::endl;
+	}
+	
 }
 
 void executeCloseCommand()
 {
-	if (currElem) {
+	if (rootElem && hasUnsaved) {
 		std::cout << "Do you want to save your work?: ";
 		MyString resp;
 		std::cin >> resp;
@@ -162,27 +158,32 @@ void executeCloseCommand()
 		else if (resp != "no") {
 			throw std::exception("Invalid input");
 		}
-		currElem = nullptr;
+		delete rootElem;
+		rootElem = nullptr;
 		currFile = "";
 	}
+	hasUnsaved = false;
 }
 
 void executeSaveCommand()
 {
-	if (!currElem) {
+	if (!rootElem) {
 		throw std::exception("There is no open file");
 	}
 	std::ofstream ofs(currFile.c_str());
 	if (!ofs.is_open()) {
 		throw std::exception("Could not save into current");
 	}
-	ofs << *currElem;
+	for (size_t i = 0; i < rootElem->childrenCount(); ++i) {
+		ofs << *(rootElem->childAt(i)) << std::endl;
+	}
 	ofs.close();
+	hasUnsaved = false;
 }
 
 void executeSaveAsCommand()
 {
-	if (!currElem) {
+	if (!rootElem) {
 		throw std::exception("There is no open file");
 	}
 	std::cout << "Enter destination path: ";
@@ -192,9 +193,12 @@ void executeSaveAsCommand()
 	if (!ofs.is_open()) {
 		throw std::exception("Could not open destination for writing");
 	}
-	ofs << *currElem;
+	for (size_t i = 0; i < rootElem->childrenCount(); ++i) {
+		ofs << *(rootElem->childAt(i)) << std::endl;
+	}
 	ofs.close();
 	currFile = dest;
+	hasUnsaved = false;
 }
 
 void executeHelpCommand()
@@ -225,6 +229,7 @@ void executeSetCommand()
 	MyString value;
 	myGetLine(std::cin, value);
 	elem->setAttribute(attribName, value);
+	hasUnsaved = true;
 }
 
 void executeSelectCommand()
@@ -271,6 +276,7 @@ void executeDeleteCommand()
 	MyString key;
 	myGetLine(std::cin, key);
 	elem->removeAttribute(key);
+	hasUnsaved = true;
 }
 
 void executeNewchildCommand()
@@ -282,6 +288,7 @@ void executeNewchildCommand()
 	XMLElement* child = new XMLElement();
 	child->setId(IdList::getId(childId));
 	elem->addChild(child);
+	hasUnsaved = true;
 }
 
 void executeXpathCommand()
@@ -290,24 +297,29 @@ void executeXpathCommand()
 	MyString xpath;
 	myGetLine(std::cin, xpath);
 	XPathQuery* query = XPathFactory::create(xpath);
-	query->operator()(currElem);
-	std::cout << query->result().getSize() << "extracted: " << std::endl;
+	ElementFunction::traverseElementTree(rootElem, *query);
+	std::cout << query->result().getSize() << " extracted: " << std::endl;
 	std::cout << "[";
-	for (size_t i = 0; i < query->result().getSize(); ++i) {
-		std::cout << query->result()[i] << " ";
+	const Vector<MyString>& res = query->result();
+	if (res.getSize() > 0) {
+		for (size_t i = 0; i < res.getSize() - 1; ++i) {
+			std::cout << "\"" << res[i] << "\"" << ", ";
+		}
+		std::cout << "\"" << res[res.getSize() - 1] << "\"";
 	}
+	std::cout << "]" << std::endl;
 	delete query;
 }
 
 XMLElement* getElementById()
 {
-	if (!currElem) {
+	if (!rootElem) {
 		throw std::exception("There is no open file!");
 	}
 	MyString id;
 	std::cout << "Enter element id: ";
 	myGetLine(std::cin, id);
-	XMLElement* elem = currElem->findInTreeById(id);
+	XMLElement* elem = rootElem->findInTreeById(id);
 	if (!elem) {
 		throw std::exception("There is no element with this id!");
 	}
