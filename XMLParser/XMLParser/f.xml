@@ -1,8 +1,14 @@
 <person id="0">
 	<name>John Smith</name>
 	<address type="home">Brooklyn, NY</address>
-<address type="work">Manhattan, NYC</address>
-	<occupation>dentist</occupation>
+	<address type="work">Manhattan, NYC</address>
+	<occupation>
+	<position>Dentist</position>
+	<salary>
+	<amount>10000</amount>
+	<currency value="USD"></currency>
+	</salary>
+	</occupation>
 </person>
 <person id="1">
 	<name>Ivan Petrov</name>

@@ -44,7 +44,12 @@ void executeXpathCommand();
 XMLElement* getElementById();
 
 int main() {
-	runMainLoop();
+	try {
+		runMainLoop();
+	}
+	catch (const std::exception& e) {
+		std::cout << "An error occurred: " << e.what() << std::endl;
+	}
 	return 0;
 }
 

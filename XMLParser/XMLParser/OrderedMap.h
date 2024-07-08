@@ -45,11 +45,11 @@ public:
 
 	OrderedMap(const OrderedMap& other);
 
-	OrderedMap(OrderedMap&& other);
+	OrderedMap(OrderedMap&& other) noexcept;
 
 	OrderedMap& operator=(const OrderedMap& other);
 
-	OrderedMap& operator=(OrderedMap&& other);
+	OrderedMap& operator=(OrderedMap&& other) noexcept;
 
 	~OrderedMap();
 
