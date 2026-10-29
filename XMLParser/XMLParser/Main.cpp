@@ -3,6 +3,7 @@
 #include "XPathFactory.h"
 #include <string>
 
+// The console owns one document wrapper. File output uses only its children.
 MyString currFile = "";
 XMLElement* rootElem = nullptr;
 bool hasUnsaved = false;
@@ -55,6 +56,7 @@ int main() {
 
 MyString readCommand()
 {
+	// Read only a command name here; each handler prompts for its own arguments.
 	std::cout << "Enter command: ";
 	MyString command;
 	myGetLine(std::cin, command);
@@ -153,6 +155,7 @@ void executePrintCommand()
 
 void executeCloseCommand()
 {
+	// Current behavior: cleanup is inside this branch, so a clean document stays open.
 	if (rootElem && hasUnsaved) {
 		std::cout << "Do you want to save your work?: ";
 		MyString resp;
@@ -264,6 +267,7 @@ void executeChildCommand()
 	XMLElement* elem = getElementById();
 	size_t n;
 	std::cout << "Enter child position: ";
+	// childAt is zero-based. Formatted extraction leaves the newline in the stream.
 	std::cin >> n;
 	std::cout << *(elem->childAt(n)) << std::endl;
 }
@@ -290,6 +294,7 @@ void executeNewchildCommand()
 	MyString childId;
 	std::cout << "Enter child id: ";
 	myGetLine(std::cin, childId);
+	// Only the ID is initialized here; this command leaves the tag name and text empty.
 	XMLElement* child = new XMLElement();
 	child->setId(IdList::getId(childId));
 	elem->addChild(child);
@@ -301,6 +306,7 @@ void executeXpathCommand()
 	std::cout << "Enter xpath query: ";
 	MyString xpath;
 	myGetLine(std::cin, xpath);
+	// The factory can return nullptr for invalid input; this handler does not check it.
 	XPathQuery* query = XPathFactory::create(xpath);
 	ElementFunction::traverseElementTree(rootElem, *query);
 	std::cout << query->result().getSize() << " extracted: " << std::endl;

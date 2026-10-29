@@ -9,6 +9,7 @@ OrderedMap<MyString, MyString> XMLElementFactory::parseAttributes(const StringVi
 		if (eqPos < 0) break;
 
 		MyString name = v.substr(pos, eqPos - pos).trim().toString();
+		// Attribute values are delimited by double quotes; entities are kept verbatim.
 		int quotePos = v.findFirst( eqPos + 1, '"');
 		int endQuotePos = v.findFirst(quotePos + 1, '"');
 
@@ -17,6 +18,7 @@ OrderedMap<MyString, MyString> XMLElementFactory::parseAttributes(const StringVi
 
 		pos = endQuotePos + 1;
 	}
+    // Every parsed element gets an ID, even when the source omitted one.
     if (attributes.exists("id")) {
         attributes["id"] = IdList::getId(attributes["id"]);
     }
@@ -40,6 +42,7 @@ XMLElement* XMLElementFactory::create(const char* fileName)
 XMLElement* XMLElementFactory::create(std::ifstream& ifs)
 {
 	MyString str = readAll(ifs);
+    // File input may have multiple top-level elements. The console hides this wrapper.
     str = "<root id=\"ROOT\">" + str + "</root>";
 	return create(str);
 }
@@ -79,6 +82,7 @@ XMLElement* XMLElementFactory::create(const StringView& str, size_t& pos)
     if (closeTagStart < 0) {
         return element;
     }
+    // The next tag decides between leaf text and child nodes; mixed content is lost.
     if (str[closeTagStart + 1] == '/') {
         size_t closeTagEnd = str.findFirst( closeTagStart, '>');
         element->setText(str.substr(openTagEnd + 1, closeTagStart - openTagEnd - 1).trim().toString());
@@ -86,6 +90,8 @@ XMLElement* XMLElementFactory::create(const StringView& str, size_t& pos)
     }
     else {
         pos = closeTagStart;
+        // Recursive calls advance pos past each child; skip inter-element whitespace.
+        // The closing tag's name is not compared with the opening tag's name.
         while (str[pos] != '<' || str[pos + 1] != '/') {
             element->addChild(create(str, pos));
             pos = str.findFirstNotOf(pos, " \n\t\v\r");

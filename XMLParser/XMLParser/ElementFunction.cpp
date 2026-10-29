@@ -83,6 +83,7 @@ ComparisonQuery::ComparisonQuery(const MyString& elemName, const MyString& child
 
 void ComparisonQuery::operator()(const XMLElement* elem)
 {
+	// First test the predicate against direct children, then collect selected siblings.
 	bool found = false;
 	if (elem->getName() == elemName) {
 		for (size_t i = 0; i < elem->childrenCount(); ++i) {
@@ -109,6 +110,7 @@ ElementFunction* ComparisonQuery::clone() const
 
 void ElementFunction::traverseElementTree(const XMLElement* elem, ElementFunction& traversalFunction)
 {
+	// Apply before descending so collected results preserve document preorder.
 	traversalFunction(elem);
 	for (size_t i = 0; i < elem->childrenCount(); ++i) {
 		traverseElementTree(elem->childAt(i), traversalFunction);

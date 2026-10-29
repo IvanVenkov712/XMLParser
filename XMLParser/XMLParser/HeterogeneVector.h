@@ -3,6 +3,8 @@
 #include <iostream>
 #include <iostream>
 
+/// Owning polymorphic array; public insertion clones values via T::clone().
+/// T must allow deletion through T*. This container is not used by the XML tree.
 template<typename T>
 class HeterogeneVector {
 protected:

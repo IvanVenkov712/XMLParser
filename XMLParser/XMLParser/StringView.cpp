@@ -157,6 +157,8 @@ int StringView::findLastNotOf(const StringView& chars) const
 
 StringView StringView::trim() const
 {
+	// Search results are indices. Known limitation: the substring length below
+	// does not subtract start, so leading whitespace can produce an invalid range.
 	int start = findFirstNotOf(wSpaces);
 	int len = findLastNotOf(wSpaces);
 	if (start < 0) {

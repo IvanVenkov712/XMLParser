@@ -5,6 +5,8 @@
 #include <utility>
 
 
+/// Contiguous owning array with checked zero-based access and geometric growth.
+/// Reallocation invalidates references; insert accepts only an existing index.
 template <typename T>
 class Vector
 {

@@ -1,6 +1,11 @@
 #pragma once
 #include <iostream>
 
+/**
+ * Array-backed map sorted by key, with binary-search lookup and linear insertion.
+ * Mutable indexing inserts missing keys; const indexing throws on a miss.
+ * Keys must support ==, <, and >. Resizing invalidates references to pairs.
+ */
 template<typename KeyT, typename ValueT>
 class OrderedMap {
 public:
@@ -69,6 +74,7 @@ public:
 
 	size_t getCount() const;
 
+	/// Access a pair by its zero-based position in key order, not insertion order.
 	Pair& getPair(size_t at);
 
 	const Pair& getPair(size_t at) const;
@@ -271,6 +277,7 @@ void OrderedMap<KeyT, ValueT>::removeAt(const KeyT& key) {
 	if (index < 0) {
 		return;
 	}
+	// Known limitation: entries shift left, but count is not decremented afterward.
 	for (int i = index; i < (int)count - 1; ++i) {
 		data[i] = std::move(data[i + 1]);
 	}

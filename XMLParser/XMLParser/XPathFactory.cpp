@@ -4,6 +4,7 @@ XPathQuery* XPathFactory::create(const MyString& queryString)
 {
     try {
         StringView view(queryString);
+        // Dispatch on the first separator: parent/child or an element predicate.
         int to = view.findFirstOf("/[");
         MyString elemName = view.substr(0, to).toString();
         if (view[to] == '/') {
@@ -18,6 +19,7 @@ XPathQuery* XPathFactory::create(const MyString& queryString)
         else if (view[to] == '[') {
             if (view[to + 1] == '@') {
                 int attribEnd = view.findFirst(']');
+                // Known limitation: this slice retains '@', unlike normal XML keys.
                 MyString attribName = view.substr(to + 1, attribEnd - to - 1).toString();
                 return new AttribQuery(elemName, attribName);
             }
@@ -30,6 +32,7 @@ XPathQuery* XPathFactory::create(const MyString& queryString)
 
                 int sStart = view.findFirst('/');
                 int sLen = view.length() - sStart;
+                // Known limitation: the leading '/' remains in the selected tag name.
                 MyString selectChildName = view.substr(sStart, sLen).trim().toString();
                 return new ComparisonQuery(elemName, cmpChildName, cmpChildValue, selectChildName);
             }

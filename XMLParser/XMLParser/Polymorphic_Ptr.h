@@ -2,6 +2,11 @@
 #include <utility>
 #include <stdexcept>
 
+/**
+ * Owning pointer with value semantics: copy calls T::clone(), move transfers.
+ * T must support clone() and deletion through T*. Raw-pointer construction
+ * takes ownership; get() only borrows it. Do not wrap an already-owned address.
+ */
 template <class T>
 class Polymorphic_Ptr {
 	T* data = nullptr;
@@ -28,6 +33,7 @@ public:
 	const T& operator*() const;
 
 	operator bool() const;
+	/// Adopt a different non-null pointer; nullptr is currently ignored.
 	void reset(T* data);
 
 	T* get();

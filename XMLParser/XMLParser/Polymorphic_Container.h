@@ -2,6 +2,7 @@
 #include "Vector.h"
 #include "Polymorphic_Ptr.h"
 
+/// Owning sequence of clone-on-copy pointers; push_back adopts its raw argument.
 template <class T>
 class Polymorphic_Container {
 	Vector<Polymorphic_Ptr<T>> data;

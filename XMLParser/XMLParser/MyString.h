@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cstring>
 
+/// Owning null-terminated string; copies duplicate storage and moves transfer it.
 class MyString
 {
 public:
@@ -20,6 +21,7 @@ public:
 	size_t getCapacity() const;
 	size_t getSize() const;
 
+	/// Borrow the buffer until mutation or destruction; moved-from storage is null.
 	const char* c_str() const;
 
 	void pushBack(char ch);
@@ -54,4 +56,6 @@ bool operator<=(const MyString& lhs, const MyString& rhs);
 bool operator>(const MyString& lhs, const MyString& rhs);
 bool operator>=(const MyString& lhs, const MyString& rhs);
 
+/// Replace str with characters through delim or EOF; consume but do not store delim.
+/// Leading whitespace is preserved, including a newline left by formatted input.
 std::istream& myGetLine(std::istream& is, MyString& str, char delim = '\n');
